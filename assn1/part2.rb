@@ -6,6 +6,8 @@ class NoSuchStrategyError < StandardError ; end
 class String
 	# Function to return the rules of RPS game
 	def beats?(x)
+		# First player wins
+		return 1 if self == x
 		case self
 			when "R"
 				return 1 if x == "S"
@@ -36,7 +38,7 @@ end
 
 # Simulator for the RPS game and returns winner
 def rps_game_winner(game)
-	raise WrongNumberOfPlayersError unless game.length <= 2
+	raise WrongNumberOfPlayersError unless game.length == 2
 
 	# Horrible brute force solution, will fix another time
 	if game.flatten.size == 4
@@ -53,3 +55,28 @@ def rps_game_winner(game)
 	end
 	game.flatten
 end
+
+def rps_tournament_winner(game)
+	rps_game_winner(game)	
+end
+
+#g = [
+#[
+#[ ["Armando", "P"], ["Dave", "S"] ],
+#[ ["Richard", "R"], ["Michael", "S"] ],
+#],
+#[
+#[ ["Allen", "S"], ["Omer", "P"] ],
+#[ ["David E.", "R"], ["Richard X.", "P"] ]
+#]
+#]
+#
+#p rps_game_winner(g)
+#
+#g = [ ["Ryan", "P"] , ["Cameron", "R"] ]
+#
+#p rps_game_winner(g)
+#
+#g = [ ["Cameron", "P"] , ["Ryan", "P"] ]
+#
+#p rps_game_winner(g)
