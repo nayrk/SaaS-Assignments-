@@ -6,8 +6,12 @@ class NoSuchStrategyError < StandardError ; end
 class String
 	# Function to return the rules of RPS game
 	def beats?(x)
-		# First player wins
+		# Raise error if no such strategy
+		raise NoSuchStrategyError if x =~ /[^S|P|R]/
+		
+		# First player wins if its a tie
 		return 1 if self == x
+
 		case self
 			when "R"
 				return 1 if x == "S"
@@ -23,9 +27,12 @@ class String
 end
 
 # Allows each pair to play a match
-# Returns an array of the matches
+# It recursively calls itself until
+# it finds a pair to play
+# Returns an array of the match winners
 def play(subgame)
 	subgame.inject([]) do |arr,match|
+		return arr << play(match) unless match[0][1].respond_to? :beats?
 		r = match[0][1].beats?(match[1][1])
 		case r
 			when 1
@@ -40,13 +47,15 @@ end
 def rps_game_winner(game)
 	raise WrongNumberOfPlayersError unless game.length == 2
 
-	# Horrible brute force solution, will fix another time
+	# Single match
 	if game.flatten.size == 4
-		g = []
-		g << game
-		return play(g).flatten
+		# Reformat the array to work with play()
+		game = Array.new(1) { Array.new(1) {game}  }
 	end
+
+	# Multiple matches
 	while game.flatten.size != 2
+		# Reformat the array to work with play()
 		g = []
 		g << game.inject([]) do |arr,subgame|
 			arr << play(subgame)
@@ -56,27 +65,8 @@ def rps_game_winner(game)
 	game.flatten
 end
 
+# Function simply calls rps_game_winner(game) because
+# rps_game_winner can handle all the cases
 def rps_tournament_winner(game)
 	rps_game_winner(game)	
 end
-
-#g = [
-#[
-#[ ["Armando", "P"], ["Dave", "S"] ],
-#[ ["Richard", "R"], ["Michael", "S"] ],
-#],
-#[
-#[ ["Allen", "S"], ["Omer", "P"] ],
-#[ ["David E.", "R"], ["Richard X.", "P"] ]
-#]
-#]
-#
-#p rps_game_winner(g)
-#
-#g = [ ["Ryan", "P"] , ["Cameron", "R"] ]
-#
-#p rps_game_winner(g)
-#
-#g = [ ["Cameron", "P"] , ["Ryan", "P"] ]
-#
-#p rps_game_winner(g)
