@@ -1,18 +1,18 @@
 # Notes
 
 Final Submission:
-+ Part1 : 100/100
-+ Part2 : pending/100
-+ Part3 : 100/100
-+ Part4 : 100/100
-+ Part5 : 100/100
+* Part 1 : 100/100
+* Part 2 : pending/100
+* Part 3 : 100/100
+* Part 4 : 100/100
+* Part 5 : 100/100
 
 First Submission:
-+ Part1 : 100/100
-+ Part2 : 19/100
-+ Part3 : 90/100
-+ Part4 : 100/100
-+ Part5 : 100/100
+* Part 1 : 100/100
+* Part 2 : 19/100
+* Part 3 : 90/100
+* Part 4 : 100/100
+* Part 5 : 100/100
 
 For Part 2, I misread the intsructions and didn't create a rps_tournament_winner method which is
 really just using the first method rps_game_winner.
