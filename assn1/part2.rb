@@ -32,13 +32,16 @@ end
 # Returns an array of the match winners
 def play(subgame)
 	subgame.inject([]) do |arr,match|
-		return arr << play(match) unless match[0][1].respond_to? :beats?
-		r = match[0][1].beats?(match[1][1])
-		case r
-			when 1
-				( arr ||= [] ) << match[0]
-			when 0
-				( arr ||= [] ) << match[1]
+		if !match[0][1].respond_to? :beats?
+			arr << play(match) 
+		else
+			r = match[0][1].beats?(match[1][1])
+			case r
+				when 1
+					( arr ||= [] ) << match[0]
+				when 0
+					( arr ||= [] ) << match[1]
+			end
 		end
 	end
 end
